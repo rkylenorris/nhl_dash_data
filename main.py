@@ -113,4 +113,40 @@ fig.update_layout(
 )
 
 # Show the figure
-fig.show()
+# fig.show()
+
+# actual goals versus expected goals bar chart
+
+goals_fig = go.Figure()
+
+# Add Carolina Hurricanes' line
+goals_fig.add_trace(go.Bar(
+    x=carolina_avg_df['season'],
+    y=carolina_avg_df['goalsFor'],
+    name='Goals For Carolina',
+    marker_color='red'
+))
+
+
+# Add League Average line
+goals_fig.add_trace(go.Bar(
+    x=league_avg_df['season'],
+    y=league_avg_df['goalsFor'],
+    name='Goals For Leaugue Average',
+    marker_color='white'
+))
+
+# Update layout
+goals_fig.update_layout(
+    title='Goals For: Carolina Hurricanes vs League Average',
+    xaxis_title='Season',
+    yaxis_title='Goals',
+    template='plotly_dark',
+    legend=dict(title='Team', orientation='h', x=0.5, xanchor='center', y=1.1)
+)
+
+# Show the figure
+goals_fig.show()
+
+
+# TODO: Create additional visuals, creat app.py to run dash dashboard, import data from this script
