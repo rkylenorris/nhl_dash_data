@@ -113,7 +113,7 @@ fig.update_layout(
 )
 
 # Show the figure
-# fig.show()
+fig.show()
 
 # actual goals versus expected goals bar chart
 
@@ -148,5 +148,3 @@ goals_fig.update_layout(
 # Show the figure
 goals_fig.show()
 
-
-# TODO: Create additional visuals, creat app.py to run dash dashboard, import data from this script
