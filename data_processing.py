@@ -67,12 +67,16 @@ with open(conference_and_division_path) as f:
 shots_df['gameId'] = shots_df['season'].astype(str) + '0' + shots_df['game_id'].astype(str)
 
 # add game outcome column to all_teams_df
+all_teams_main_situation_df['goalsFor'] = all_teams_main_situation_df['goalsFor'].fillna(0)
+all_teams_main_situation_df['goalsAgainst'] = all_teams_main_situation_df['goalsAgainst'].fillna(0)
 all_teams_main_situation_df['gameOutcome'] = all_teams_main_situation_df.apply(lambda row: 'W' if row['goalsFor'] > row['goalsAgainst'] else ('L' if row['goalsFor'] < row['goalsAgainst'] else 'T'), axis=1)
 
-# add OT column to shots_df
+# add OT and shootout columns to shots_df based on game time
 shots_df['OT'] = shots_df.apply(lambda row: True if row['time'] > 3600 else False, axis=1)
+shots_df['shootout'] = shots_df.apply(lambda row: True if row['time'] > 3900 else False, axis=1)
 
-game_outcomes_car = all_teams_main_situation_df[all_teams_main_situation_df['team'] == 'CAR']
+# filter out playoff games for regular season record
+game_outcomes_car = all_teams_main_situation_df[(all_teams_main_situation_df['team'] == 'CAR') & (all_teams_main_situation_df['playoffGame'] == 0)]
 
 carolina_games_win_loss = game_outcomes_car[['team', 'opposingTeam', 'season', 'gameId', 'gameOutcome']].groupby(['team', 'opposingTeam', 'season', 'gameId']).first().reset_index()
 
