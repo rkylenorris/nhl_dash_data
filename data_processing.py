@@ -75,11 +75,22 @@ all_teams_main_situation_df['gameOutcome'] = all_teams_main_situation_df.apply(l
 shots_df['OT'] = shots_df.apply(lambda row: True if row['time'] > 3600 else False, axis=1)
 shots_df['shootout'] = shots_df.apply(lambda row: True if row['time'] > 3900 else False, axis=1)
 
+
+
+# create lookup table for gameid and OT and shootout
+gameid_ot_shootout = shots_df[['gameId', 'OT', 'shootout']].groupby('gameId').first().reset_index()
+
+# create list of gameids that have ot or shootout
+ot_shootout_games = gameid_ot_shootout[(gameid_ot_shootout['OT'] == True) | (gameid_ot_shootout['shootout'] == True)]['gameId'].tolist()
+
 # filter out playoff games for regular season record
 game_outcomes_car = all_teams_main_situation_df[(all_teams_main_situation_df['team'] == 'CAR') & (all_teams_main_situation_df['playoffGame'] == 0)]
 
 carolina_games_win_loss = game_outcomes_car[['team', 'opposingTeam', 'season', 'gameId', 'gameOutcome']].groupby(['team', 'opposingTeam', 'season', 'gameId']).first().reset_index()
 
-carolina_games_win_loss.to_csv(data_dir / "carolina_games_win_loss.csv", index=False)
+# filter out ot and shootout games
+carolina_games_no_ot = carolina_games_win_loss[~carolina_games_win_loss['gameId'].isin(ot_shootout_games)]
 
-# number of wins still not adding up but am close
+carolina_games_no_ot.to_csv(data_dir / "carolina_games_win_loss.csv", index=False)
+
+
