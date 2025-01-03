@@ -17,11 +17,11 @@ app = dash.Dash(__name__, external_stylesheets=[
 # Define the layout of the app
 app.layout = html.Div([
     html.Div([
-    html.Div([
-        html.Img(src=league_logo_path.as_posix(), style={'height': '60px', 'margin-right': '10px'}),
-        html.H1("Carolina Hurricanes Stats Dashboard", style={'display': 'inline-block', 'verticalAlign': 'middle', 'color': car_red}),
-        html.Img(src=logo_path.as_posix(), style={'height': '75px', 'margin-left': '10px'}),
-    ], style={'display': 'flex', 'alignItems': 'center', 'margin-bottom': '20px', 'margin-top': '20px'}, className='jumbotron'),
+        html.Div([
+            html.Img(src=league_logo_path.as_posix(), style={'height': '60px', 'margin-right': '10px'}),
+            html.H1("Carolina Hurricanes Stats Dashboard", style={'display': 'inline-block', 'verticalAlign': 'middle', 'color': car_red}),
+            html.Img(src=logo_path.as_posix(), style={'height': '75px', 'margin-left': '10px'}),
+        ], style={'display': 'flex', 'alignItems': 'center', 'margin-bottom': '20px', 'margin-top': '20px'}, className='jumbotron shadow-md'),
     ], className='container')
 ], style={'backgroundColor': bg_grey})
 # Define callback to update graph based on dropdown selection
